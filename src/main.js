@@ -17,4 +17,3 @@ app.use(VueAxios, axios) // Load vueAxios
 app.use(router)
 app.component('VueLoading', Loading)
 app.mount('#app')
-console.log(Loading)
