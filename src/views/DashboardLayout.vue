@@ -45,14 +45,11 @@ export default {
       this.$http.post(url)
         .then((res) => {
           console.log(res)
-          if (!res.data.success) {
-            this.$router.push('/login')
-          }
         })
-        // .catch((err) => {
-        //   console.log(err)
-        //   this.$router.push('/login')
-        // })
+        .catch((err) => {
+          console.log(err)
+          this.$router.push('/login')
+        })
     }
   },
   mounted () {
