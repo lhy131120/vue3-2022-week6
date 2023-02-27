@@ -8,6 +8,7 @@
             <li class="nav-item"><router-link class="nav-link" to="/about">About</router-link></li>
             <li class="nav-item"><router-link class="nav-link" to="/products">Products</router-link></li>
             <li class="nav-item"><router-link class="nav-link" to="/cart">Cart</router-link></li>
+            <li class="nav-item"><router-link class="nav-link" to="/login">登入</router-link></li>
           </ul>
         </div>
       </div>
