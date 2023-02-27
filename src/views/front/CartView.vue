@@ -187,9 +187,11 @@ export default {
   },
   methods: {
     getCarts () {
+      console.log(VITE_URL)
       this.isLoading = true
       this.$http.get(`${VITE_URL}/api/${VITE_API}/cart`)
         .then((res) => {
+          console.log(res)
           this.cart = res.data.data
           this.isLoading = false
         })

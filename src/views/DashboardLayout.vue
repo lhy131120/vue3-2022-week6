@@ -29,9 +29,6 @@ export default {
     RouterView,
     RouterLink
   },
-  mounted () {
-    this.checkLogin()
-  },
   methods: {
     logout () {
       document.cookie = `vue2022Ex=; expires=${new Date()};`
@@ -44,18 +41,22 @@ export default {
         ?.split('=')[1]
       this.$http.defaults.headers.common.Authorization = cookieValue
 
-      const url = `${VITE_URL}api/user/check`
+      const url = `${VITE_URL}/api/user/check`
       this.$http.post(url)
         .then((res) => {
           console.log(res)
-          // if (!res.data.success) {
-          //   this.$router.push('/login')
-          // }
+          if (!res.data.success) {
+            this.$router.push('/login')
+          }
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        // .catch((err) => {
+        //   console.log(err)
+        //   this.$router.push('/login')
+        // })
     }
+  },
+  mounted () {
+    this.checkLogin()
   }
 }
 </script>

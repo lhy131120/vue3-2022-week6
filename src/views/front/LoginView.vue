@@ -45,7 +45,7 @@ export default {
         })
         .catch(err => {
           this.isLoading = false
-          console.log(err)
+          alert(err.message)
           this.clearInputVal()
         })
     },
