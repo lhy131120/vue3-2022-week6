@@ -40,7 +40,7 @@ const routes = [
   },
   {
     path: '/admin',
-    component: () => import('../views/DashboardView.vue'),
+    component: () => import('../views/DashboardLayout.vue'),
     children: [
       {
         path: 'products',

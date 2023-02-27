@@ -39,9 +39,8 @@ export default {
         .then(res => {
           this.isLoading = false
           const { token, expired } = res.data
-          document.cookie = `customCookieName=${token}; expires=${new Date(expired)};`
+          document.cookie = `vue2022Ex=${token}; expires=${new Date(expired)}`
           this.clearInputVal()
-          // window.location = './products.html'
           this.$router.push('/admin/products')
         })
         .catch(err => {

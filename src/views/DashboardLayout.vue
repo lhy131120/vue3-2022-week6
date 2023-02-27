@@ -34,23 +34,26 @@ export default {
   },
   methods: {
     logout () {
-      document.cookie = `customCookieName=; expires=${new Date()};`
+      document.cookie = `vue2022Ex=; expires=${new Date()};`
       this.$router.push('/login')
     },
     checkLogin () {
-      const cookieValue = document.cookie.split('; ').find((row) => row.startsWith('customCookieName='))?.split('=')[1]
+      const cookieValue = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('vue2022Ex='))
+        ?.split('=')[1]
       this.$http.defaults.headers.common.Authorization = cookieValue
 
       const url = `${VITE_URL}api/user/check`
       this.$http.post(url)
         .then((res) => {
-          if (!res.data.success) {
-            this.$router.push('/login')
-          }
+          console.log(res)
+          // if (!res.data.success) {
+          //   this.$router.push('/login')
+          // }
         })
         .catch((err) => {
-          // alert(err.data.message)
-          console.log(err.message)
+          console.log(err)
         })
     }
   }
