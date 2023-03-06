@@ -1,5 +1,6 @@
 <template>
-  <font-awesome-icon icon="fa-duotone fa-loader"></font-awesome-icon>
+  <!-- <font-awesome-icon icon="fa-solid fa-spinner" /> -->
+  <!-- <font-awesome-icon icon="fa-solid fa-user-secret" /> -->
   <vue-loading :active="isLoading"></vue-loading>
   <div class="text-center">
     <h2 class="mb-5 text-danger">產品頁面</h2>
@@ -17,7 +18,8 @@
                 <!-- <font-awesome-icon icon="fa-duotone fa-loader" v-if="loadingItem === product.id" /> -->
                 詳細資料
               </router-link>
-              <button @click="addToCart(product.id)" type="button" class="btn btn-outline-success">
+              <button @click="addToCart(product.id)" type="button" class="btn btn-outline-success" :disabled="loadingItem === product.id">
+                <!-- <font-awesome-icon icon="fa-solid fa-spinner" /> -->
                 <!-- <font-awesome-icon icon="fa-duotone fa-loader" v-if="loadingItem === product.id" /> -->
                 加入購物車
               </button>

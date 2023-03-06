@@ -16,6 +16,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+// import 'https://kit.fontawesome.com/11097f317d.css'
 
 import './assets/all.scss' // Load bootstrap scss
 
@@ -27,5 +28,6 @@ library.add(faUserSecret)
 
 app.use(VueAxios, axios) // Load vueAxios
 app.use(router)
-app.component('VueLoading', Loading, FontAwesomeIcon) // FontAwesomeIcon是新增的
+app.component('VueLoading', Loading)
+app.component('font-awesome-icon', FontAwesomeIcon) // FontAwesomeIcon是新增的
 app.mount('#app')
