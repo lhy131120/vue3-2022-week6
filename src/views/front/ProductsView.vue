@@ -1,4 +1,5 @@
 <template>
+  <font-awesome-icon icon="fa-duotone fa-loader"></font-awesome-icon>
   <vue-loading :active="isLoading"></vue-loading>
   <div class="text-center">
     <h2 class="mb-5 text-danger">產品頁面</h2>
@@ -11,9 +12,15 @@
           <td width="250">{{ product.title }}</td>
           <td><img :src="product.imageUrl" width="200" alt=""></td>
           <td>
-            <div class="btn-group" role="group" aria-label="Basic example">
-              <router-link :to="`/product/${product.id}`" class="btn btn-outline-secondary">詳細資料</router-link>
-              <button @click="addToCart(product.id)" type="button" class="btn btn-outline-success">加入購物車</button>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+              <router-link :to="`/product/${product.id}`" class="btn btn-outline-secondary">
+                <!-- <font-awesome-icon icon="fa-duotone fa-loader" v-if="loadingItem === product.id" /> -->
+                詳細資料
+              </router-link>
+              <button @click="addToCart(product.id)" type="button" class="btn btn-outline-success">
+                <!-- <font-awesome-icon icon="fa-duotone fa-loader" v-if="loadingItem === product.id" /> -->
+                加入購物車
+              </button>
             </div>
           </td>
         </tr>
@@ -30,6 +37,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      loadingItem: '',
       products: []
     }
   },
@@ -50,9 +58,13 @@ export default {
         })
     },
     addToCart (id, qty = 1) {
+      this.loadingItem = id
       const data = { product_id: id, qty }
       this.$http.post(`${VITE_URL}/api/${VITE_API}/cart`, { data })
-        .then(res => { alert(res.data.message) })
+        .then(res => {
+          this.loadingItem = ''
+          alert(res.data.message)
+        })
         .catch(err => { alert(err) })
     }
   },

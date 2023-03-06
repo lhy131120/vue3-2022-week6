@@ -21,7 +21,8 @@
           <th></th>
           <th>品名</th>
           <th style="width: 150px">數量/單位</th>
-          <th>單價</th>
+          <th class="text-end">單價</th>
+          <th class="text-end">總價</th>
         </tr>
       </thead>
       <tbody>
@@ -50,6 +51,9 @@
               </div>
             </td>
             <td class="text-end">
+              {{ item.product.price }}
+            </td>
+            <td class="text-end">
               {{ item.total }}
             </td>
           </tr>
@@ -57,11 +61,11 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="4" class="text-end">總計</td>
+          <td colspan="5" class="text-end">總計</td>
           <td class="text-end">{{ cart.total }}</td>
         </tr>
         <tr>
-          <td colspan="4" class="text-end text-success">折扣價</td>
+          <td colspan="5" class="text-end text-success">折扣價</td>
           <td class="text-end text-success">{{ cart.final_total}}</td>
         </tr>
       </tfoot>
@@ -121,7 +125,7 @@
         </div>
         <div class="mb-3">
           <label for="tel" class="form-label">收件人電話</label>
-          <Field id="tel" name="電話" type="text" class="form-control" placeholder="請輸入電話" rules="required|numeric|min:8"
+          <Field id="tel" name="電話" type="tel" class="form-control" placeholder="請輸入電話" rules="required|numeric|min:8"
             v-model="data.user.tel" :class="{ 'is-invalid': errors['電話'] }"></Field>
           <error-message name="電話" class="invalid-feedback"></error-message>
         </div>

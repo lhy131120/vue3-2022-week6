@@ -15,7 +15,7 @@
   <div class="container">
     <!-- 此router view 是 display 各個children components -->
     <div class="row py-3">
-      <router-view />
+        <router-view v-if="isAdmin"></router-view>
     </div>
   </div>
 </template>
@@ -25,6 +25,11 @@ import { RouterView, RouterLink } from 'vue-router'
 const { VITE_URL } = import.meta.env
 
 export default {
+  data () {
+    return {
+      isAdmin: ''
+    }
+  },
   components: {
     RouterView,
     RouterLink
@@ -45,10 +50,12 @@ export default {
       this.$http.post(url)
         .then((res) => {
           console.log(res)
+          this.isAdmin = true
         })
         .catch((err) => {
           console.log(err)
           this.$router.push('/login')
+          this.isAdmin = false
         })
     }
   },

@@ -29,7 +29,10 @@
     </div>
     <hr>
     <div class="text-end">
-      <button @click="addToCart(product.id)" type="button" class="btn btn-outline-secondary">加入購物車</button>
+      <button @click="addToCart(product.id)" type="button" class="btn btn-outline-secondary">
+        <i class="fas fa-spinner fa-pulse" v-if="loadingItem === product.id"></i>
+        加入購物車
+      </button>
     </div>
   </div>
 </template>
@@ -41,6 +44,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      loadingItem: '',
       product: {}
     }
   },
@@ -56,9 +60,13 @@ export default {
         })
     },
     addToCart (id, qty = 1) {
+      this.loadingItem = id
       const data = { product_id: id, qty }
       this.$http.post(`${VITE_URL}/api/${VITE_API}/cart`, { data })
-        .then(res => { alert(res.data.message) })
+        .then(res => { 
+          this.loadingItem = ''
+          alert(res.data.message)
+        })
         .catch(err => { alert(err) })
     }
   },
