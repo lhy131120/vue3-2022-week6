@@ -136,7 +136,7 @@
         </div>
         <div class="mb-3">
           <label for="message" class="form-label">留言</label>
-          <textarea id="message" class="form-control" cols="30" rows="10" style="resize:none; height: 200px; overflow-y: auto;" v-model="data.user.message"></textarea>
+          <textarea ref="textarea" id="message" class="form-control" cols="30" rows="10" style="resize:none; height: 200px; overflow-y: auto;" v-model="data.message"></textarea>
         </div>
         <div class="text-end">
           <button type="submit" class="btn btn-danger">送出訂單</button>
@@ -177,9 +177,9 @@ export default {
           name: '',
           email: '',
           tel: '',
-          address: '',
-          message: ''
-        }
+          address: ''
+        },
+        message: ''
       }
     }
   },
@@ -244,10 +244,11 @@ export default {
         .then(res => {
           alert(`${res.data.message}, 訂單號碼是:${res.data.orderId}`)
           this.$refs.form.resetForm()
-          this.getCart()
+          this.$refs.textarea.value = ''
+          this.getCarts()
         })
         .catch(err => {
-          alert(err.response.data.message)
+          console.log(err)
         })
     }
   },
