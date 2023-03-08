@@ -15,7 +15,7 @@ echo > .nojekyll
 git init
 git checkout -B main
 git add -A
-git commit -m 'deploy update admin orders page'
+git commit -m 'deploy update axios with disable status'
 
 # if you are deploying to https://lhy131120.github.io
 # git push -f git@github.com:lhy131120/lhy131120.github.io.git main

@@ -9,6 +9,7 @@
           <td>訂單狀態</td>
           <td>訂單建立日期</td>
           <td>訂單客戶資訊</td>
+          <td></td>
         </tr>
         <tr v-for="order in orders" :key="order.id">
           <td>{{ order.id }}</td>
@@ -21,6 +22,9 @@
             客戶mail: {{ order.user.email }} <br>
             客戶tel: {{ order.user.tel }} <br>
             客戶address: {{ order.user.address }}
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" @click="openModal(order.id)">修改訂單</button>
           </td>
         </tr>
       </tbody>
@@ -47,6 +51,9 @@ export default {
         .catch(err => {
           console.log('admin orders error: ' + err)
         })
+    },
+    openModal (orderId) {
+      console.log(orderId)
     }
   },
   mounted () {

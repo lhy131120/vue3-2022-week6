@@ -3,8 +3,7 @@
     <vue-loading :active="isLoading"></vue-loading>
     <h2 class="mb-5 text-danger text-center">購物車頁面</h2>
     <div class="text-end" v-if="cart.total > 0">
-      <button class="btn btn-outline-danger" type="button" @click="deleteAllItem">
-        <i class="fas fa-spinner fa-pulse" v-if="clearAll"></i>
+      <button class="btn btn-outline-danger" type="button" :disabled="clearAll" @click="deleteAllItem">
         清空購物車</button>
     </div>
     <table v-if="cart.total === 0" class="table align-middle text-center">
@@ -29,7 +28,7 @@
         <template v-if="cart.carts">
           <tr v-for="item in cart.carts" :key="item.id">
             <td>
-              <button type="button" class="btn btn-outline-danger btn-sm" @click="deleteItem(item)">
+              <button type="button" class="btn btn-outline-danger btn-sm" @click="deleteItem(item)" :disabled="loadingItem === item.id">
                 <i class="fas fa-spinner fa-pulse" v-if="loadingItem === item.id"></i>
                 x
               </button>
@@ -172,7 +171,7 @@ export default {
       isLoading: false,
       cart: {},
       loadingItem: '',
-      clearAll: '',
+      clearAll: false,
       data: {
         user: {
           name: '',
