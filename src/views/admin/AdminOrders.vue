@@ -1,5 +1,46 @@
+<script>
+import orderModal from '../../components/OrderModal.vue'
+const { VITE_URL, VITE_API } = import.meta.env
+
+export default {
+  data () {
+    return {
+      isLoading: false,
+      orders: [],
+      tempOrders: {},
+      pagination: {},
+      orderMounted: false
+    }
+  },
+  components: {
+    orderModal
+  },
+  methods: {
+    getOrders (page = 1) {
+      this.isLoading = true
+      this.$http.get(`${VITE_URL}/api/${VITE_API}/admin/orders/?page=${page}`)
+        .then(res => {
+          console.log(res.data)
+          this.orders = res.data.orders
+          this.pagination = res.data.pagination
+          this.isLoading = false
+          this.orderMounted = true
+        })
+        .catch(err => {
+          console.log('admin orders error: ' + err)
+          this.isLoading = false
+        })
+    }
+  },
+  mounted () {
+    this.getOrders()
+  }
+}
+</script>
+
 <template>
-  <h2 class="text-center text-danger">後台產品訂單列表</h2>
+  <vue-loading :active="isLoading"></vue-loading>
+  <h2 class="text-center text-danger mb-4">後台產品訂單列表</h2>
   <hr>
   <div class="table-responsive">
     <table class="table">
@@ -24,40 +65,29 @@
             客戶address: {{ order.user.address }}
           </td>
           <td>
-            <button type="button" class="btn btn-primary" @click="openModal(order.id)">修改訂單</button>
+            <button type="button" class="btn btn-primary">修改訂單</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <orderModal></orderModal>
+    <!-- Pagination -->
+    <nav v-if="orderMounted && orders">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" :class="{disabled: !pagination.has_pre}">
+          <a class="page-link" href="#" aria-label="Previous" @click.prevent="getOrders(pagination.current_page - 1)">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" :class="{ active: page === pagination.current_page }" v-for='page in pagination.total_pages' :key="page +'page'" >
+          <a class="page-link" href="#" @click.prevent="getOrders(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" :class="{disabled: !pagination.has_next}">
+          <a class="page-link" href="#" aria-label="Next" @click.prevent="getOrders(pagination.current_page + 1)">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
-
-<script>
-const { VITE_URL, VITE_API } = import.meta.env
-
-export default {
-  data () {
-    return {
-      orders: []
-    }
-  },
-  methods: {
-    getOrders () {
-      this.$http.get(`${VITE_URL}/api/${VITE_API}/admin/orders`)
-        .then(res => {
-          console.log(res.data.orders)
-          this.orders = res.data.orders
-        })
-        .catch(err => {
-          console.log('admin orders error: ' + err)
-        })
-    },
-    openModal (orderId) {
-      console.log(orderId)
-    }
-  },
-  mounted () {
-    this.getOrders()
-  }
-}
-</script>

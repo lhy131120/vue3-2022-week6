@@ -139,7 +139,7 @@
           <textarea ref="textarea" id="message" class="form-control" cols="30" rows="10" style="resize:none; height: 200px; overflow-y: auto;" v-model="data.message"></textarea>
         </div>
         <div class="text-end">
-          <button type="submit" class="btn btn-danger">送出訂單</button>
+          <button type="submit" class="btn btn-danger" :disabled="isOrdering">送出訂單</button>
         </div>
       </v-form>
       </div>
@@ -172,6 +172,7 @@ export default {
       cart: {},
       loadingItem: '',
       clearAll: false,
+      isOrdering: false,
       data: {
         user: {
           name: '',
@@ -239,13 +240,15 @@ export default {
         })
     },
     createOrder () {
+      this.isOrdering = true
       const data = this.data
       this.$http.post(`${VITE_URL}/api/${VITE_API}/order`, { data })
         .then(res => {
           alert(`${res.data.message}, 訂單號碼是:${res.data.orderId}`)
           this.$refs.form.resetForm()
-          this.$refs.textarea.value = ''
+          this.data.message = ''
           this.getCarts()
+          this.isOrdering = false
         })
         .catch(err => {
           console.log(err)

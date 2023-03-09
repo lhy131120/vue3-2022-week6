@@ -49,7 +49,7 @@ export default {
       const url = `${VITE_URL}/api/user/check`
       this.$http.post(url)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           this.isAdmin = true
         })
         .catch((err) => {
