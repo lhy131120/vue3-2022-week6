@@ -3,11 +3,12 @@ import orderModal from '../../components/OrderModal.vue'
 const { VITE_URL, VITE_API } = import.meta.env
 
 export default {
+  props: ['showModal'],
   data () {
     return {
       isLoading: false,
       orders: [],
-      tempOrders: {},
+      tempOrder: {},
       pagination: {},
       orderMounted: false
     }
@@ -30,6 +31,11 @@ export default {
           console.log('admin orders error: ' + err)
           this.isLoading = false
         })
+    },
+    openOrderModal (order) {
+      // this.tempOrder = { ...order }
+      this.tempOrder = JSON.parse(JSON.stringify(order))
+      this.$refs.orderModal.showModal()
     }
   },
   mounted () {
@@ -59,18 +65,18 @@ export default {
           </td>
           <td>{{ order.create_at }}</td>
           <td>
-            客戶名: {{ order.user.name }} <br>
-            客戶mail: {{ order.user.email }} <br>
-            客戶tel: {{ order.user.tel }} <br>
-            客戶address: {{ order.user.address }}
+            收貨人姓名: {{ order.user.name }} <br>
+            聯絡電郵: {{ order.user.email }} <br>
+            聯絡電話: {{ order.user.tel }} <br>
+            送貨地址: {{ order.user.address }}
           </td>
           <td>
-            <button type="button" class="btn btn-primary">修改訂單</button>
+            <button type="button" class="btn btn-primary" @click="openOrderModal(order)">修改訂單</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <orderModal></orderModal>
+    <orderModal ref="orderModal" :order="tempOrder"></orderModal>
     <!-- Pagination -->
     <nav v-if="orderMounted && orders">
       <ul class="pagination justify-content-center">
