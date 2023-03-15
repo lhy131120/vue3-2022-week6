@@ -1,5 +1,5 @@
 <script>
-import orderModal from '../../components/OrderModal.vue'
+import orderModal from '../../components/AdminOrderModal.vue'
 const { VITE_URL, VITE_API } = import.meta.env
 
 export default {
@@ -33,8 +33,8 @@ export default {
         })
     },
     openOrderModal (order) {
-      // this.tempOrder = { ...order }
-      this.tempOrder = JSON.parse(JSON.stringify(order))
+      this.tempOrder = { ...order }
+      // console.log(this.tempOrder.user.name)
       this.$refs.orderModal.showModal()
     }
   },
@@ -76,7 +76,7 @@ export default {
         </tr>
       </tbody>
     </table>
-    <orderModal ref="orderModal" :order="tempOrder"></orderModal>
+    <orderModal ref="orderModal" :temp-order="tempOrder"></orderModal>
     <!-- Pagination -->
     <nav v-if="orderMounted && orders">
       <ul class="pagination justify-content-center">
